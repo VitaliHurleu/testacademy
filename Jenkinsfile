@@ -5,6 +5,7 @@ pipeline {
     environment {
         DOCKERHUB_TOKEN = credentials('dockerhub_token')
         imagename = "barabanuser02/testacademy"
+        containername = "my-container"
         gpg_secret = credentials("gpg-secret")
         gpg_trust = credentials("gpg-ownertrust")
         gpg_passphrase = credentials("gpg-passphrase")
@@ -43,9 +44,12 @@ pipeline {
         stage('Test image') {
             steps {
                 sh 'docker inspect --type=image "${imagename}:latest" '
+                sh 'docker run -d "${containername}" "${imagename}:latest"'
+                sh 'curl localhost:3000'
+                sh 'docker stop -d "${containername}"'
                 echo 'testing...'
-            }
-        }    
+            }  
+        }     
         stage('Push'){
             steps{
                 sh 'echo $DOCKERHUB_TOKEN_PSW | sudo docker login -u $DOCKERHUB_TOKEN_USR --password-stdin'
