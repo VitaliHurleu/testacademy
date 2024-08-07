@@ -24,14 +24,13 @@ pipeline {
                     steps {
                        sh 'hadolint Dockerfile | tee -a      ms1_docker_lint.txt'
                     }
- /*                   post {
+                    post {
                        always {
                            archiveArtifacts 'ms1_docker_lint.txt'
-                       }*/
+                       }
                     }
                 } 
             }
-
         }
         stage('Build'){
             steps{
@@ -55,6 +54,6 @@ pipeline {
                 
             }
         }
-        }
     }
-    
+}
+}
