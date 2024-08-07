@@ -4,6 +4,7 @@ pipeline {
     }
     environment {
         DOCKERHUB_TOKEN = credentials('dockerhub_token')
+        imagename = "barabanuser02/testacademy"
         gpg_secret = credentials("gpg-secret")
         gpg_trust = credentials("gpg-ownertrust")
         gpg_passphrase = credentials("gpg-passphrase")
@@ -35,20 +36,20 @@ pipeline {
         }    
         stage('Build'){
             steps{
-                sh 'docker build . -t barabanuser02/testacademy:latest'
+                sh 'docker build . -t "${imagename}:latest"'
                 echo 'building...'
             }
         }
         stage('Test image') {
             steps {
-                sh 'docker inspect --type=image barabanuser02/testacademy:latest '
+                sh 'docker inspect --type=image "${imagename}:latest" '
                 echo 'testing...'
             }
         }    
         stage('Push'){
             steps{
                 sh 'echo $DOCKERHUB_TOKEN_PSW | sudo docker login -u $DOCKERHUB_TOKEN_USR --password-stdin'
-                sh 'sudo docker push barabanuser02/testacademy'
+                sh 'sudo docker push "${imagename}:latest"'
                 echo 'pushing...'
             }
         }  
