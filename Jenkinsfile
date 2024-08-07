@@ -23,7 +23,7 @@ pipeline {
                         }
                     }
                 steps {
-                    sh 'hadolint microservice1/dockerfile | tee -a      ms1_docker_lint.txt'
+                    sh 'hadolint Dockerfile | tee -a      ms1_docker_lint.txt'
                 }
                     post {
                         always {
