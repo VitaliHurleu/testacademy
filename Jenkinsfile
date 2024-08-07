@@ -35,15 +35,16 @@ pipeline {
         }    
         stage('Build'){
             steps{
+                sh 'docker build . -t barabanuser02/testacademy:latest'
                 echo 'building...'
             }
         }
         stage('Test image') {
             steps {
+                sh 'docker inspect --type=image barabanuser02/testacademy:latest '
                 echo 'testing...'
             }
-        }
-        
+        }    
         stage('Push'){
             steps{
                 echo 'pushing...'
