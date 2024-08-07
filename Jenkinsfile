@@ -19,17 +19,17 @@ pipeline {
                     agent {
                         docker {
                             image 'hadolint/hadolint:latest-debian'
-            }
+                        }
                     }
-                   steps {
+                    steps {
                        sh 'hadolint Dockerfile | tee -a      ms1_docker_lint.txt'
-                   }
-                   post {
+                    }
+ /*                   post {
                        always {
                            archiveArtifacts 'ms1_docker_lint.txt'
-                       }
+                       }*/
                     }
-                }
+                } 
             }
 
         }
