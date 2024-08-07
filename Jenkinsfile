@@ -44,7 +44,7 @@ pipeline {
         stage('Test image') {
             steps {
                 sh 'docker inspect --type=image "${imagename}:latest" '
-                sh 'docker run -d --name "${containername}" "${imagename}:latest"'
+                sh 'docker run -d -p 3333:3000 --name "${containername}" "${imagename}:latest"'
                 sh 'curl localhost:3000'
                 sh 'docker stop -d "${containername}"'
                 echo 'testing...'
