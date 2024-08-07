@@ -47,6 +47,8 @@ pipeline {
         }    
         stage('Push'){
             steps{
+                sh 'echo $DOCKERHUB_TOKEN_PSW | sudo docker login -u $DOCKERHUB_TOKEN_USR --password-stdin'
+                sh 'sudo docker push barabanuser02/testacademy'
                 echo 'pushing...'
             }
         }  
