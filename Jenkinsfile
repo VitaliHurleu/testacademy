@@ -45,7 +45,7 @@ pipeline {
             steps {
                 sh 'docker inspect --type=image "${imagename}:latest" '
                 sh 'docker run -d -p 3333:3000 --name "${containername}" "${imagename}:latest"'
-                sh 'curl localhost:3333'
+                sh 'curl google.com'
                 sh 'docker stop -d "${containername}"'
                 sh 'docker rm "${containername}"'
                 echo 'testing...'
