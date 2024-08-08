@@ -46,7 +46,7 @@ pipeline {
                 sh 'docker inspect --type=image "${imagename}:latest" '
                 sh 'docker run -d -p 3333:3000 --name "${containername}" "${imagename}:latest"'
                 sh 'sleep 5'
-                sh 'curl localhost:3000'
+                sh 'curl localhost:3333'
                 sh 'docker stop "${containername}"'
                 sh 'docker rm "${containername}"'
                 echo 'testing...'
