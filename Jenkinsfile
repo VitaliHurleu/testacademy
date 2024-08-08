@@ -60,8 +60,12 @@ pipeline {
             }
         }  
         stage('Deploy'){
-            steps{
-                echo 'deploying ' 
+            steps {
+                script {
+                env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
+                parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select environment', name: 'env')]
+                echo "Deploying in ${env.selected_environment}."
+                }
             }
         }
     }
