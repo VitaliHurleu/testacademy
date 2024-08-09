@@ -65,10 +65,10 @@ pipeline {
                     env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
                     parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select environment', name: 'env')]
                     echo "Deploying in ${env.selected_environment}."
+                    sh 'kubectl deployment.yaml'
+                    sh 'kubectl service.yaml'
                 }
-                script {
-                     kubernetesDeploy(configs: "deployment.yaml","service.yaml")
-                }
+
             }
         }
     }
