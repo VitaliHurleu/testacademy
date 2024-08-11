@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: k8s-web-hello
+  name: k8s-testacademy
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: k8s-web-hello
+      app: k8s-testacademy
   template:
     metadata:
       labels:
-        app: k8s-web-hello
+        app: k8s-testacademy
     spec:
       containers:
-      - name: k8s-web-hello
-        image: barabanuser02/k8s-web-hello
+      - name: k8s-testacademy
+        image: barabanuser02/testacademy
         resources:
           limits:
             memory: "128Mi"
