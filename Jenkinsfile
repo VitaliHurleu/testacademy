@@ -76,7 +76,7 @@ pipeline {
                     }
                     withKubeConfig([credentialsId: 'minikubeconfig']) {
                             sh 'kubectl delete --namespace=test deploy/k8s-testacademy'
-                            //sh 'kubectl delete --namespace=test svc/k8s-testacademy'
+                            sh 'kubectl delete --namespace=test svc/k8s-testacademy'
                         }
                 }
 
