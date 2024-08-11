@@ -6,9 +6,6 @@ pipeline {
         DOCKERHUB_TOKEN = credentials('dockerhub_token')
         imagename = "barabanuser02/testacademy"
         containername = "my-container"
-        gpg_secret = credentials("gpg-secret")
-        gpg_trust = credentials("gpg-ownertrust")
-        gpg_passphrase = credentials("gpg-passphrase")
     }
     stages{
         stage('Checkout'){
@@ -68,18 +65,19 @@ pipeline {
                         sh 'sleep 5'
                         sh 'curl http://192.168.49.2:30465/'
                     }
-                    env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
+                    env.selected_environment = input  message: 'Test pre-production is ok, select environment to Deploy',ok : 'Proceed',id :'tag_id',
                     parameters:[choice(choices: ['not deploy', 'prod'], description: 'Select environment', name: 'env')]
-                    //echo "Deploying in ${env.selected_environment}."
                     if (env.selected_environment == "prod"){
                         withKubeConfig([credentialsId: 'minikubeconfig']) {
                             sh 'kubectl config set-context --current --namespace=prod'
                             sh 'kubectl apply -f deployment.yaml -f serviceLB.yaml'
-                            sh 'sleep 5'
-                           // sh 'curl http://192.168.49.2:30465/'
                         }
                         echo "Deploying in ${env.selected_environment}."
                     }
+                    withKubeConfig([credentialsId: 'minikubeconfig']) {
+                            sh 'kubectl delete --namespace=test deploy/k8s-testacademy'
+                            //sh 'kubectl delete --namespace=test svc/k8s-testacademy'
+                        }
                 }
 
             }
