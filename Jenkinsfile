@@ -64,14 +64,20 @@ pipeline {
                 script {
                     withKubeConfig([credentialsId: 'minikubeconfig']) {
                         sh 'kubectl config set-context --current --namespace=test'
-                        sh 'kubectl apply -f deployment.yaml -f service.yaml'
+                        sh 'kubectl apply -f deployment.yaml -f serviceNP.yaml'
                         sh 'sleep 5'
                         sh 'curl http://192.168.49.2:30465/'
                     }
                     env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
-                    parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'prod'], description: 'Select environment', name: 'env')]
-                    echo "Deploying in ${env.selected_environment}."
+                    parameters:[choice(choices: ['not deploy', 'prod'], description: 'Select environment', name: 'env')]
+                    //echo "Deploying in ${env.selected_environment}."
                     if (env.selected_environment == "prod"){
+                        withKubeConfig([credentialsId: 'minikubeconfig']) {
+                            sh 'kubectl config set-context --current --namespace=${env.selected_environment}'
+                            sh 'kubectl apply -f deployment.yaml -f serviceLB.yaml'
+                            sh 'sleep 5'
+                           // sh 'curl http://192.168.49.2:30465/'
+                        }
                         echo "Deploying in ${env.selected_environment}."
                     }
                 }
