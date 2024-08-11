@@ -73,7 +73,7 @@ pipeline {
                     //echo "Deploying in ${env.selected_environment}."
                     if (env.selected_environment == "prod"){
                         withKubeConfig([credentialsId: 'minikubeconfig']) {
-                            sh 'kubectl config set-context --current --namespace=${env.selected_environment}'
+                            sh 'kubectl config set-context --current --namespace=prod'
                             sh 'kubectl apply -f deployment.yaml -f serviceLB.yaml'
                             sh 'sleep 5'
                            // sh 'curl http://192.168.49.2:30465/'
