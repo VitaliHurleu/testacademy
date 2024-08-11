@@ -66,7 +66,7 @@ pipeline {
                     parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select environment', name: 'env')]
                     echo "Deploying in ${env.selected_environment}."
                     sh 'kubectl config view'
-                    sh 'kubectl apply -f deployment.yaml'
+                    //sh 'kubectl apply -f deployment.yaml'
                     //sh 'kubectl apply -f deployment.yaml -f service.yaml'
                     withKubeConfig([credentialsId: 'minikubeconfig']) {
                         sh 'kubectl apply -f deployment.yaml -f service.yaml'
