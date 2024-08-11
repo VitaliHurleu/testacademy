@@ -67,6 +67,9 @@ pipeline {
                     echo "Deploying in ${env.selected_environment}."
                     sh 'kubectl config view'
                     //sh 'kubectl apply -f deployment.yaml -f service.yaml'
+                    withKubeConfig([credentialsId: 'user1', serverUrl: 'https://api.k8s.my-company.com']) {
+                        sh 'kubectl apply -f deployments.yaml -f service.yaml'
+                    }
                 }
 
             }
