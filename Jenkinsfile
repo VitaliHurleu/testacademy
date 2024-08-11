@@ -66,7 +66,7 @@ pipeline {
                         sh 'kubectl config set-context --current --namespace=test'
                         sh 'kubectl apply -f deployment.yaml -f service.yaml'
                         sh 'sleep 5'
-                        sh 'curl localhost:3333'
+                        sh 'curl http://192.168.49.2:30465/'
                     }
                     env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
                     parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select environment', name: 'env')]
