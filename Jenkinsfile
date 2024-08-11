@@ -68,7 +68,7 @@ pipeline {
                     sh 'kubectl config view'
                     //sh 'kubectl apply -f deployment.yaml -f service.yaml'
                     withKubeConfig([credentialsId: 'minikubeconfig']) {
-                        sh 'kubectl apply -f deployments.yaml -f service.yaml'
+                        sh 'sudo kubectl apply -f deployments.yaml -f service.yaml'
                     }
                 }
 
