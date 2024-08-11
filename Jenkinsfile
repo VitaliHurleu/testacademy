@@ -63,7 +63,7 @@ pipeline {
                         sh 'kubectl config set-context --current --namespace=test'
                         sh 'kubectl apply -f deployment.yaml -f serviceNP.yaml'
                         sh 'sleep 15'
-                        //sh 'curl http://192.168.49.2:30465/'
+                        sh 'curl http://192.168.49.2:30465/'
                     }
                     env.selected_environment = input  message: 'Test pre-production is ok, select environment to Deploy',ok : 'Proceed',id :'tag_id',
                     parameters:[choice(choices: ['not deploy', 'prod'], description: 'Select environment', name: 'env')]
