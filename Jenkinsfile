@@ -69,8 +69,9 @@ pipeline {
                         sh 'curl http://192.168.49.2:30465/'
                     }
                     env.selected_environment = input  message: 'Select environment to Deploy',ok : 'Proceed',id :'tag_id',
-                    parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'PROD'], description: 'Select environment', name: 'env')]
+                    parameters:[choice(choices: ['DEV', 'QA', 'STAGING', 'prod'], description: 'Select environment', name: 'env')]
                     echo "Deploying in ${env.selected_environment}."
+                    if ${env.selected_environment} == "prod" echo "Deploying in ${env.selected_environment}."
                 }
 
             }
