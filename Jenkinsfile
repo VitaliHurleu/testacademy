@@ -64,7 +64,6 @@ pipeline {
                         sh 'kubectl apply -f deployment.yaml -f serviceNP.yaml'
                         sh 'sleep 5'
                         sh 'kubectl rollout status deployment k8s-testacademy'
-                        //sh 'curl http://192.168.49.2:30465/'
                     }
                     env.selected_environment = input  message: 'Test pre-production is ok, select environment to Deploy',ok : 'Proceed',id :'tag_id',
                     parameters:[choice(choices: ['not deploy', 'prod'], description: 'Select environment', name: 'env')]
